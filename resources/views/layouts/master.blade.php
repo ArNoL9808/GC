@@ -20,7 +20,7 @@
         @include('layouts.left-sidebar-tab')
         @include('layouts.topbar')
     <!-- Begin page -->
-    <div class="page-wrapper">
+    <div id="app" class="page-wrapper">
 
         <!-- ============================================================== -->
         <!-- Start right Content here -->
@@ -29,6 +29,7 @@
             <div class="page-content-tab">
                 <!-- Start content -->
                 <div class="container-fluid">
+                <example-component></example-component>
                    
                    @yield('content')
                    
@@ -48,6 +49,7 @@
     <!-- ============================================================== -->
 
     @include('layouts.vendor-scripts')
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 
 </html>

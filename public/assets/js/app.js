@@ -4,6 +4,24 @@
  * Module/App: Main Js
  */
 
+import { createApp } from 'vue';
+import ExampleComponent from './components/ExampleComponent.vue';
+
+// Verifica si existe un elemento con el ID "app"
+const appElement = document.querySelector('#app');
+
+// Si el elemento existe, crea y monta la aplicación Vue en él
+if (appElement) {
+    // Crea una aplicación Vue
+    const app = createApp({});
+
+    // Registra el componente ExampleComponent de Vue
+    app.component('example-component', ExampleComponent);
+
+    // Monta la aplicación Vue en el elemento con el ID "app"
+    app.mount('#app');
+}
+
 
  feather.replace();
  // Menu sticky
