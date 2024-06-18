@@ -1,7 +1,6 @@
 const mix = require('laravel-mix');
 const WebpackRTLPlugin = require('webpack-rtl-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
-const lodash = require("lodash");
 
 const folder = {
     src: "resources/", // Archivos fuente
@@ -26,14 +25,15 @@ mix.copyDirectory(folder.src + "fonts", folder.dist_assets + "fonts");
 // Copiar todas las imágenes 
 mix.copyDirectory(folder.src + "images", folder.dist_assets + "images");
 
-// Copiar todos los archivos JS
-mix.copyDirectory(folder.src + "js", folder.dist_assets + "js");
+// Evitar copiar todos los archivos JS innecesarios
+// Copiar solo archivos necesarios
+mix.copy(folder.src + "js/app.js", folder.dist_assets + "js");
 
 // Copiar todos los archivos de páginas JS
 mix.copyDirectory(folder.src + "pages", folder.dist_assets + "pages");
 
 // Copiar todos los plugins
-mix.copyDirectory(folder.src + "plugins", "public/assets/plugins");
+mix.copyDirectory(folder.src + "plugins", folder.dist_assets + "plugins");
 
 // Compilar los estilos Sass y minimizarlos
 mix.sass('resources/scss/bootstrap.scss', folder.dist_assets + "css").minify(folder.dist_assets + "css/bootstrap.css");

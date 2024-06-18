@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name: "ExampleComponent.vue",
+    name: "ProfilePatientsComponent.vue",
     props: {
 
     },

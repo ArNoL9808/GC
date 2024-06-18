@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MetricaController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('list-patients', [HomeController::class, 'list_patients'])->name('list.patients');
+Route::get('new-patient', [HomeController::class, 'new_patient'])->name('new.patient');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {

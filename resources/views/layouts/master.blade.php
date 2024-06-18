@@ -29,10 +29,7 @@
             <div class="page-content-tab">
                 <!-- Start content -->
                 <div class="container-fluid">
-                <example-component></example-component>
-                   
                    @yield('content')
-                   
                 </div> <!-- content -->
             </div>
             @include('layouts.footer')

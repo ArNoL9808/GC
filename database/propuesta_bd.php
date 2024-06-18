@@ -3,11 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
-return new class extends Migration
+class CreateProjectDatabase extends Migration
 {
     /**
      * Run the migrations.
@@ -22,13 +19,6 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->timestamps();
         });
-
-        // Insert roles into roles table
-        DB::table('roles')->insert([
-            ['name' => 'Administrador'],
-            ['name' => 'Doctor'],
-            ['name' => 'Paciente']
-        ]);
 
         // Tabla de usuarios
         Schema::create('users', function (Blueprint $table) {
@@ -52,55 +42,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Insert default admin user into users table
-        User::create([
-            'firstname' => 'Admin', 
-            'lastname' => 'Dreammeld',
-            'email' => 'admin@dreammeld.com',
-            'password' => Hash::make('dreammeld'), 
-            'role_id' => 1, 
-            'email_verified_at' => '2022-06-21 17:04:58',
-            'created_at' => now(),
-        ]);
-
-        // Tabla de clinicas
-        Schema::create('clinicas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre', 100);
-            $table->string('direccion', 255);
-            $table->string('telefono', 20);
-            $table->timestamps();
-        });
-
-        // Tabla de citas
-        Schema::create('citas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('clinica_id')->constrained()->onDelete('cascade');
-            $table->string('tipo_cita', 100); // Tipo de cita (descripción)
-            $table->timestamp('fecha_creacion')->useCurrent();
-            $table->date('fecha_cita');
-            $table->time('hora_cita');
-            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada']); // Estado de la cita
-            $table->text('comentarios')->nullable(); // Comentarios adicionales
-            $table->timestamps();
-        });
-
-        // Tabla de historiales clínicos
-        Schema::create('historiales_clinicos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relación con el usuario (paciente)
-            $table->date('fecha_consulta');
-            $table->string('motivo_consulta', 255);
-            $table->text('diagnostico');
-            $table->text('tratamiento');
-            $table->text('notas')->nullable();
-            $table->text('receta')->nullable();
-            $table->date('proxima_cita')->nullable();
-            $table->string('estado_consulta', 50);
-            $table->timestamps();
-        });
-
         // Tabla de tratamientos
         Schema::create('tratamientos', function (Blueprint $table) {
             $table->id();
@@ -119,11 +60,42 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Tabla de historiales clínicos
+        Schema::create('historiales_clinicos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relación con el usuario (paciente)
+            $table->foreignId('cita_id')->nullable()->constrained('citas')->onDelete('cascade'); // Relación opcional con la cita
+            $table->date('fecha_consulta');
+            $table->string('motivo_consulta', 255);
+            $table->text('diagnostico');
+            $table->text('tratamiento');
+            $table->text('notas')->nullable();
+            $table->text('receta')->nullable();
+            $table->date('proxima_cita')->nullable();
+            $table->string('estado_consulta', 50);
+            $table->timestamps();
+        });
+
         // Tabla de archivos
         Schema::create('archivos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('file_path');
+            $table->timestamps();
+        });
+
+        // Tabla de citas
+        Schema::create('citas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('historial_clinico_id')->nullable()->constrained('historiales_clinicos')->onDelete('cascade'); // Relación opcional con el historial clínico
+            $table->foreignId('clinica_id')->constrained()->onDelete('cascade');
+            $table->string('tipo_cita', 100); // Tipo de cita (descripción)
+            $table->timestamp('fecha_creacion')->useCurrent();
+            $table->date('fecha_cita');
+            $table->time('hora_cita');
+            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada']); // Estado de la cita
+            $table->text('comentarios')->nullable(); // Comentarios adicionales
             $table->timestamps();
         });
 
@@ -153,6 +125,7 @@ return new class extends Migration
             $table->foreignId('clinica_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -163,15 +136,13 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('clinica_user');
-        Schema::dropIfExists('historial_pagos');
         Schema::dropIfExists('pagos');
-        Schema::dropIfExists('archivos');
-        Schema::dropIfExists('tratamientos_user');
-        Schema::dropIfExists('tratamientos');
         Schema::dropIfExists('citas');
+        Schema::dropIfExists('clinicas');
+        Schema::dropIfExists('tratamientos');
         Schema::dropIfExists('historiales_clinicos');
+        Schema::dropIfExists('archivos');
         Schema::dropIfExists('users');
         Schema::dropIfExists('roles');
-        Schema::dropIfExists('clinicas');
     }
-};
+}

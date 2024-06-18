@@ -6,19 +6,21 @@
 
 import { createApp } from 'vue';
 import ExampleComponent from './components/ExampleComponent.vue';
+import DashboardComponent from './components/DashboardComponent.vue';
+import ListPatientsComponent from './components/ListPatientsComponent.vue';
+import NewPatientsComponent from './components/NewPatientsComponent.vue';
+import EditPatientsComponent from './components/EditPatientsComponent.vue';
+import ProfilePatientsComponent from './components/ProfilePatientsComponent.vue';
 
-// Verifica si existe un elemento con el ID "app"
 const appElement = document.querySelector('#app');
 
-// Si el elemento existe, crea y monta la aplicación Vue en él
 if (appElement) {
-    // Crea una aplicación Vue
     const app = createApp({});
-
-    // Registra el componente ExampleComponent de Vue
-    app.component('example-component', ExampleComponent);
-
-    // Monta la aplicación Vue en el elemento con el ID "app"
+    app.component('dahsboard-component', DashboardComponent);
+    app.component('list-patients-component', ListPatientsComponent);
+    app.component('new-patient-component', NewPatientsComponent);
+    app.component('edit-patients-component', EditPatientsComponent);
+    app.component('profile-patients-component', ProfilePatientsComponent);
     app.mount('#app');
 }
 

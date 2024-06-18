@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
+
+        Schema::table('historiales_clinicos', function (Blueprint $table) {
+            $table->foreignId('cita_id')->nullable()->constrained('citas')->onDelete('cascade');
+        });
     }
 
     /**
@@ -28,5 +32,9 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('password_resets');
+        Schema::table('historiales_clinicos', function (Blueprint $table) {
+            $table->dropForeign(['cita_id']);
+            $table->dropColumn('cita_id');
+        });
     }
 };
