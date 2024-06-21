@@ -28,12 +28,17 @@ class HomeController extends Controller
 
     public function list_patients()
     {
-        return view('gc.patients.list-patient'); // Asegúrate de tener una vista llamada list-patients.blade.php
+        return view('gc.patients.list-patient');
     }
 
     
     public function new_patient()
     {
-        return view('gc.patients.new-patient'); // Asegúrate de tener una vista llamada list-patients.blade.php
+        return view('gc.patients.new-patient');
+    }
+
+    public function edit_patient($uuid)
+    {
+        return view('gc.patients.edit-patient', ['uuid' => $uuid]);
     }
 }

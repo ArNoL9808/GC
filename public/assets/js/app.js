@@ -19,7 +19,7 @@ if (appElement) {
     app.component('dahsboard-component', DashboardComponent);
     app.component('list-patients-component', ListPatientsComponent);
     app.component('new-patient-component', NewPatientsComponent);
-    app.component('edit-patients-component', EditPatientsComponent);
+    app.component('edit-patient-component', EditPatientsComponent);
     app.component('profile-patients-component', ProfilePatientsComponent);
     app.mount('#app');
 }

@@ -61,6 +61,9 @@ mix.webpackConfig({
     stats: {
         children: true,
     },
+    watchOptions: {
+        ignored: /public\/assets\/images/
+    }
 });
 
 // Compilar el archivo app.js de Vue.js y agregarlo a public/js

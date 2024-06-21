@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 return new class extends Migration
 {
@@ -33,6 +34,7 @@ return new class extends Migration
         // Tabla de usuarios
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->string('firstname', 100);
             $table->string('lastname', 100);
             $table->string('email', 100)->unique();

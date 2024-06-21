@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::get('list-patients', [HomeController::class, 'list_patients'])->name('list.patients');
 Route::get('new-patient', [HomeController::class, 'new_patient'])->name('new.patient');
+Route::get('edit-patient/{uuid}', [HomeController::class, 'edit_patient'])->name('edit.patient');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {

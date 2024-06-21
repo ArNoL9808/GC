@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/patients', [UserController::class, 'index']);
+Route::post('/patients', [UserController::class, 'store']);
+Route::get('/patient/{uuid}', [UserController::class, 'show']);
+Route::post('/patient/{uuid}', [UserController::class, 'update']);

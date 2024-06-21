@@ -1,6 +1,6 @@
 <div class="leftbar-tab-menu">
     <div class="main-icon-menu">
-        <a href="hospital-index" class="logo logo-metrica d-block text-center">
+        <a href="/" class="logo logo-metrica d-block text-center">
             <span>
                 <img src="{{URL::asset('assets/images/logo-sm.png')}}" alt="logo-pequeño" class="logo-sm">
             </span>
@@ -27,7 +27,7 @@
     <div class="main-menu-inner">
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="hospital-index" class="logo">
+            <a href="/" class="logo">
                 <span>
                     <img src="{{URL::asset('assets/images/logo-dark.png')}}" alt="logo-grande" class="logo-lg logo-dark">
                     <img src="{{URL::asset('assets/images/logo.png')}}" alt="logo-grande" class="logo-lg logo-light">
@@ -108,9 +108,6 @@
                                                 </li><!--end nav-item-->
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="/new-patient">Agregar Paciente</a>
-                                                </li><!--end nav-item-->
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="hospital-patient-edit">Editar Paciente</a>
                                                 </li><!--end nav-item-->
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="hospital-patient-profile">Perfil del Paciente</a>
